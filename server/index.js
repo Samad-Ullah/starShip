@@ -23,25 +23,47 @@ const user = require("./Routes/login");
 app.use("/",user);
 // app.use("/",people)
 app.use("/people", function(req,res){
-  const data = Axios.get('https://swapi.dev/api/people')
+   Axios.get('https://swapi.dev/api/people/')
   .then(response => {
-    return response.json();
+    res.status(200).json({
+      data:response.data
+    })
   })
   .catch(error => {
-    return error ;
+    res.status(404).json({
+      error: error.message
+    })
   });
-  res.send(data)
+
 })
 
 app.use("/planet", function(req,res){
-  const data = Axios.get('https://swapi.dev/api/planets')
+   Axios.get('https://swapi.dev/api/planets')
   .then(response => {
-  console.log(response)
+  res.status(200).json({
+    data:response.data
+  })
   })
   .catch(error => {
-    return error ;
-  });
-  res.send(data)
+    res.status(404).json({
+      error : error.message
+    }) ;
+  });  
+})
+
+
+app.use("/starship", function(req,res){
+  Axios.get('https://swapi.dev/api/starships')
+ .then(response => {
+ res.status(200).json({
+   data:response.data
+ })
+ })
+ .catch(error => {
+   res.status(404).json({
+     error : error.message
+   }) ;
+ });  
 })
 
 
